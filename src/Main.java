@@ -1,39 +1,48 @@
 import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Stack;
 
-public class PalindromeCheckerUC5 {
+public class UseCase6PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Palindrome Checker App - UC5 (Stack Based) ===");
+        System.out.println("=== Palindrome Checker App - UC6 (Queue + Stack) ===");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
         // Convert to lowercase for case-insensitive comparison
         input = input.toLowerCase();
 
+        // Create Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
+
+        // Create Stack (LIFO)
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
+        // Enqueue and Push characters
         for (int i = 0; i < input.length(); i++) {
-            stack.push(input.charAt(i));   // Push Operation
+            char ch = input.charAt(i);
+            queue.add(ch);   // Enqueue operation
+            stack.push(ch);  // Push operation
         }
 
         boolean isPalindrome = true;
 
-        // Pop and compare
-        for (int i = 0; i < input.length(); i++) {
-            char poppedChar = stack.pop();   // Pop Operation
+        // Compare Dequeue vs Pop
+        while (!queue.isEmpty()) {
+            char fromQueue = queue.remove(); // Dequeue operation
+            char fromStack = stack.pop();    // Pop operation
 
-            if (input.charAt(i) != poppedChar) {
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Print result
+        // Display result
         if (isPalindrome) {
             System.out.println("✅ It is a Palindrome.");
         } else {
